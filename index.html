@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mess Menu Finder</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 16px;
+      color: #0f172a;
+    }
+    .box {
+      background: #ffffff;
+      padding: 22px 18px;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    }
+    h1 {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: 22px;
+      color: #0f172a;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #475569;
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      margin: 12px 0 6px;
+      color: #334155;
+      font-weight: 600;
+    }
+    select, button {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 15px;
+      border-radius: 12px;
+      border: 1px solid #cbd5f5;
+      outline: none;
+    }
+    select {
+      background: #f8fafc;
+    }
+    select:focus {
+      border-color: #6366f1;
+    }
+    button {
+      margin-top: 16px;
+      background: linear-gradient(135deg, #6366f1, #2563eb);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    button:hover {
+      opacity: 0.95;
+    }
+    .result {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #f1f5f9;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #020617;
+    }
+    .footer {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 13px;
+      color: #64748b;
+    }
+    .footer a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 20px; }
+      .box { border-radius: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h1>H10 Mess Menu</h1>
+    <p class="subtitle">Hello H10 ki public. Check karke kya karoge mess ka to tumko khana nahi hai. Swiggy karo.</p>
+
+    <label for="day">Select Day</label>
+    <select id="day">
+      <option value="">Select Day</option>
+      <option>Monday</option>
+      <option>Tuesday</option>
+      <option>Wednesday</option>
+      <option>Thursday</option>
+      <option>Friday</option>
+      <option>Saturday</option>
+      <option>Sunday</option>
+    </select>
+
+    <label for="slot">Select Meal</label>
+    <select id="slot">
+      <option value="">Select Slot</option>
+      <option>Breakfast</option>
+      <option>Lunch</option>
+      <option>Evening Snacks</option>
+      <option>Dinner</option>
+    </select>
+
+    <button onclick="getMenu()">Check Menu</button>
+
+    <div class="result" id="result"></div>
+    <div class="footer">Contact: <a href="mailto:karann6287@gmail.com">karann6287@gmail.com</a></div>
+  </div>
+
+  <script>
+    const messMenu = {
+      Monday: {
+        Breakfast: "Poha, Jalebi, Bareek Sev, Banana, Egg, Sprouts, Milk, Tea",
+        Lunch: "Soya Chunks, Channa Dal Fry, Boondi Raita, Steam Rice, Chapati with Butter, Salad",
+        "Evening Snacks": "Bada Pav / Samosa, Imli Chutney, Tea",
+        Dinner: "Seasonal Veg (Shimla, Kaddu), Tuar Dal Fry, Steam Rice, Chapati with Butter, Salad"
+      },
+      Tuesday: {
+        Breakfast: "Idli, Sambhar, Chutney, Banana, Sprouts, Milk, Tea",
+        Lunch: "Dal Tadka, Matar Tamatar Aloo Sabji, Steam Rice, Chapati with Butter, Butter Milk, Salad",
+        "Evening Snacks": "Veg Maggi Masala, Coffee",
+        Dinner: "Mix Veg, Mix Dal Fry, Steam Rice, Chapati with Butter"
+      },
+      Wednesday: {
+        Breakfast: "Masala Sandwich, Tomato Sauce, Egg, Milk, Tea, Banana, Sprouts",
+        Lunch: "Kadi Pakoda, Jeera Aloo, Steam Rice, Chapati with Butter, Salad",
+        "Evening Snacks": "Sabudana Khichdi, Tea",
+        Dinner: "Egg Curry, Matar Paneer, Chapati with Butter, Steam Rice, Onion Salad"
+      },
+      Thursday: {
+        Breakfast: "Puri, Aloo Tamatar Sabji, Achar, Banana, Sprouts, Milk, Tea",
+        Lunch: "Rajma Masala, Boondi Raita, Dal Fry, Steam Rice, Chapati with Butter, Salad",
+        "Evening Snacks": "Veg Noodles, Coffee",
+        Dinner: "Sev Tamatar / Dum Aloo, Khadi Masoor Dal, Steam Rice, Chapati with Butter, Salad"
+      },
+      Friday: {
+        Breakfast: "Pav, Bhaji, Banana, Egg, Sprouts, Milk, Tea",
+        Lunch: "Palak Matar Aloo Sabji, Tuar Dal Fry, Steam Rice, Chapati with Butter, Salad",
+        "Evening Snacks": "Poha, Sev, Tea",
+        Dinner: "Bhindi / Foli Gobhi, Dal Fry, Steam Rice, Chapati with Butter, Salad"
+      },
+      Saturday: {
+        Breakfast: "Masala Dosa, Sambhar, Chutney, Banana, Sprouts, Milk, Tea",
+        Lunch: "Chola Bhatura, Mirchi Fry / Dal Bafla, Aloo Tamatar Chokha, Steam Rice, Onion Salad",
+        "Evening Snacks": "Pani Puri, Tea",
+        Dinner: "Veg Biryani, Mint Raita / Dal Fry, Steam Rice, Achar, Salad"
+      },
+      Sunday: {
+        Breakfast: "Aloo Paratha, Curd / Methi Masala Paratha, Green Chutney, Achar, Tea",
+        Lunch: "Desi Channa Masala, Khadi Masoor Dal Fry, Chapati with Butter, Steam Rice, Salad",
+        "Evening Snacks": "Rusk / Toast, Tea",
+        Dinner: "Gulab Jamun / Fruit Custard, Chicken Masala, Butter Paneer Masala, Chapati, Steam Rice, Onion Salad"
+      }
+    };
+
+    function getMenu() {
+      const day = document.getElementById("day").value;
+      const slot = document.getElementById("slot").value;
+      const result = document.getElementById("result");
+
+      if (!day || !slot) {
+        result.innerHTML = "Please select both day and meal.";
+        return;
+      }
+
+      let menu = messMenu[day]?.[slot];
+
+      if (!menu) {
+        result.innerHTML = "Menu not available.";
+        return;
+      }
+
+      const nonVegItems = ["Egg Curry", "Egg", "Chicken Masala", "Chicken"]; 
+
+      nonVegItems.forEach(item => {
+        const regex = new RegExp(item, "gi");
+        menu = menu.replace(regex, `<span style=\"color:#dc2626;font-weight:600\">$&</span>`);
+      });
+
+      result.innerHTML = `Available food:<br>${menu}`;
+    }
+  </script>
+
+</body>
+</html>
